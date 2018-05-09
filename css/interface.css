@@ -3,7 +3,6 @@ body, html {
 	height: 100%;
 	margin:0;
 	padding:0;
-	background-color: #444444;
 }
 
 #login, #loading {
@@ -57,4 +56,17 @@ body, html {
 	padding: 10px;
 	height: 100%;
 	background: white;
+}
+
+.weather-entry {
+	display: none;
+}
+
+.weather-date-entry {
+	font-weight: bold;
+	padding-top: 10px;
+}
+
+#weather-toggler {
+	cursor: pointer;
 }

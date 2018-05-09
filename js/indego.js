@@ -234,7 +234,7 @@ function getWeather() {
             $("#loading").hide();
             weather = result;
 			num = weather.LocationWeather.forecast.intervals.length;
-			html = "";
+			html = "<div id=\"weather-toggler\" onclick='$(\".weather-entry\").toggle()'>Show/Hide</div>";
 			olddate = "";
 			outputdate = "";
 			for(i=0;i<num;i++) {
@@ -242,10 +242,14 @@ function getWeather() {
 				datestring = toDate(datetime);
 				outputdate = "";
 				if(olddate != datestring) {
-					olddate = datestring;
-					outputdate = (i != 0) ? "</div>" : "" + "<div class='weather-date-entry'>" + datestring + "</div><div id='weather-" + datestring + "'>";
+                    olddate = datestring;
+                    closing = "";
+                    if(i != 0) {
+                        closing = "</div>";
+                    }
+                    outputdate = closing + "<div class='weather-date-entry' onclick='$(\"#weather-" + datestring + "\").show();'>" + datestring + "</div><div class='weather-entry' id='weather-" + datestring + "'>";
 				}
-                html += outputdate + datetime.substr(11, 2) + " Uhr -> " + "Regenwahrscheinlichkeit: " +  weather.LocationWeather.forecast.intervals[i].prrr + " -> " + "Grad: " +  weather.LocationWeather.forecast.intervals[i].tt + ": " + weather.LocationWeather.forecast.intervals[i].wwtext + "<br />";
+                html += outputdate + " -> " + datetime.substr(11, 2) + " Uhr -> " + "Regenwahrscheinlichkeit: " +  weather.LocationWeather.forecast.intervals[i].prrr + " -> " + "Grad: " +  weather.LocationWeather.forecast.intervals[i].tt + ": " + weather.LocationWeather.forecast.intervals[i].wwtext + "<br />";
 			}
 
 			$('#output').html("<h3>Wettervorhersage für " + weather.LocationWeather.location.country + ", " + weather.LocationWeather.location.name + "</h3>" + html + "</div>");
