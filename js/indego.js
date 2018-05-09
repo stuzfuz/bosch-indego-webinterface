@@ -233,8 +233,6 @@ function getWeather() {
         success: function(result){
             $("#loading").hide();
             weather = result;
-            console.log(weather.LocationWeather.location.country);
-            console.log(weather.LocationWeather);
 			num = weather.LocationWeather.forecast.intervals.length;
 			html = "";
 			olddate = "";
@@ -242,16 +240,15 @@ function getWeather() {
 			for(i=0;i<num;i++) {
 				datetime = weather.LocationWeather.forecast.intervals[i].dateTime;
 				datestring = toDate(datetime);
-
 				outputdate = "";
 				if(olddate != datestring) {
 					olddate = datestring;
-					outputdate = datestring + "<br />";
+					outputdate = (i != 0) ? "</div>" : "" + "<div class='weather-date-entry'>" + datestring + "</div><div id='weather-" + datestring + "'>";
 				}
-                html += "<b>" + outputdate + "</b>" + datetime.substr(11, 2) + " Uhr -> " + "Regenwahrscheinlichkeit: " +  weather.LocationWeather.forecast.intervals[i].prrr + " -> " + "Grad: " +  weather.LocationWeather.forecast.intervals[i].tt + ": " + weather.LocationWeather.forecast.intervals[i].wwtext + "<br />";
+                html += outputdate + datetime.substr(11, 2) + " Uhr -> " + "Regenwahrscheinlichkeit: " +  weather.LocationWeather.forecast.intervals[i].prrr + " -> " + "Grad: " +  weather.LocationWeather.forecast.intervals[i].tt + ": " + weather.LocationWeather.forecast.intervals[i].wwtext + "<br />";
 			}
 
-			$('#output').html("<h3>Wettervorhersage für " + weather.LocationWeather.location.country + ", " + weather.LocationWeather.location.name + "</h3>" + html);
+			$('#output').html("<h3>Wettervorhersage für " + weather.LocationWeather.location.country + ", " + weather.LocationWeather.location.name + "</h3>" + html + "</div>");
         }
     });
 }
